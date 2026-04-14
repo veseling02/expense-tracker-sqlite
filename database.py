@@ -19,3 +19,51 @@ except sqlite3.OperationalError as e:
     print("Failed to open database", e)
 
 
+def create_transaction(type, amount, date):
+    with sqlite3.connect("transactions.db") as conn:
+        curs = conn.cursor()
+        curs.execute("INSERT INTO transactions (type, amount, date) VALUES (?, ?, ?)", (type, amount, date))
+        conn.commit()
+
+
+def get_all_trans():
+    with sqlite3.connect("transactions.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM transactions")
+        rows = cursor.fetchall()
+
+        return rows
+    
+def delete_transaction(trans_id):
+    with sqlite3.connect("transactions.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM transactions WHERE id = ?", (trans_id,))
+        conn.commit()
+
+def get_total_spent():
+    with sqlite3.connect("transactions.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT SUM(amount) FROM transactions")
+        
+        result = cursor.fetchone()
+
+        return result[0] if result[0] else 0.0
+    
+
+if __name__ == "__main__":
+    print("Testing insertion...")
+    create_transaction("water", 34, "2022-04-14")
+    print("Insertion complete!")
+
+    print("\ntesting view all")
+    print(get_all_trans())
+    print("test complete")
+    
+    print("\ntesting delete funct")
+    delete_transaction("6")
+    print(get_all_trans())
+    print("test complete")
+
+    print("\ntesting total spent")
+    print(get_total_spent())
+    print("test complete")
