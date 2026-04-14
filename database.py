@@ -6,16 +6,16 @@ CREATE TABLE IF NOT EXISTS transactions (
     type TEXT NOT NULL,
     amount REAL NOT NULL,
     date DATE)
-                """
+                  """
 
 try:
     with sqlite3.connect("transactions.db") as conn:
         print(f"Opened SQlite database with version {sqlite3.sqlite_version} successfully")
         cursor = conn.cursor()
         cursor.execute(table_statements)
-        print("TABLE CREATED SUCCESSFULLY")
-
+        conn.commit()
 
 except sqlite3.OperationalError as e:
     print("Failed to open database", e)
-print(conn)
+
+
