@@ -2,6 +2,12 @@
 <h3>Current Balance: {{ balance }}€</h3>
 
 <form action="/add" method="POST">
+    <div>
+        <input type="radio" id="expense" name="tx_type" value="Expense" checked>
+        <label for="expense">Expense</label>
+        <input type="radio" id="income" name="tx_type" value="Income" checked>
+        <label for="income">Income</label>
+    </div>
     <label for="tx_category">Category:</label><br>
     <input type="text" id="tx_category" name="categ_name" required><br>
 
@@ -17,14 +23,21 @@
             <th>Category</th>
             <th>Amount</th>
             <th>Date</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
         {% for tx in trans_list %}
         <tr>
             <td>{{ tx.category }}</td>
-            <td>${{ tx.amount }}</td>
+            <td>{{ tx.amount }}€</td>
             <td>{{ tx.date }}</td>
+            <td>
+                <a href="{{url_for('handle_delete', transaction_id=tx.id) }}"
+                onclick="return confirm('Delete this transaction?')">
+                Delete
+                </a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
