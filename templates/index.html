@@ -17,6 +17,15 @@
     <button type="submit">Save Transaction</button>
 </form>
 
+<div style="margin-bottom: 20px;">
+    <a href="{{ url_for('handle_clear') }}" 
+       onclick="return confirm('EXTREME WARNING: This will delete your entire history. Proceed?')"
+       style="color: white; background-color: #ff4d4d; padding: 8px 15px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+       Reset All Data
+    </a>
+</div>
+
+
 <table border="1">
     <thead>
         <tr>

@@ -33,6 +33,11 @@ def handle_delete(transaction_id):
     db.delete_transaction(transaction_id)
     return redirect(url_for("index"))
 
+@app.route("/clear-all")
+def handle_clear():
+    db.clear_all()
+    return redirect(url_for("index"))
+
 
 if __name__ == "__main__":
     app.run()

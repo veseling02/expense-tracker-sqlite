@@ -51,6 +51,13 @@ def get_total_spent():
 
         return result[0] if result[0] else 0.0
     
+def clear_all():
+    with sqlite3.connect("transactions.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM transactions")
+        conn.commit()
+        
+ 
 
 if __name__ == "__main__":
     print("Testing insertion...")
