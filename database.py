@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS transactions (
     id INTEGER PRIMARY KEY,
     type TEXT NOT NULL,
     category TEXT NOT NULL,
+    item TEXT NOT NULL,
     amount REAL NOT NULL,
     date DATE)
                   """
@@ -21,10 +22,10 @@ except sqlite3.OperationalError as e:
     print("Failed to open database", e)
 
 
-def create_transaction(type, category, amount, date):
+def create_transaction(type, category, item, amount, date):
     with sqlite3.connect("transactions.db") as conn:
         curs = conn.cursor()
-        curs.execute("INSERT INTO transactions (type, category, amount, date) VALUES (?, ?, ?, ?)", (type, category, amount, date))
+        curs.execute("INSERT INTO transactions (type, category, item, amount, date) VALUES (?, ?, ?, ?, ?)", (type, category, item, amount, date))
         conn.commit()
 
 
@@ -34,7 +35,7 @@ def get_all_trans():
         cursor.execute("SELECT * FROM transactions")
         rows = cursor.fetchall()
 
-        return [Transaction(id=r[0], type=r[1], category=r[2], amount=r[3], date=r[4]) for r in rows]
+        return [Transaction(id=r[0], type=r[1], category=r[2], item=r[3], amount=r[4], date=r[5]) for r in rows]
     
 def delete_transaction(trans_id):
     with sqlite3.connect("transactions.db") as conn:
