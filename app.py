@@ -17,14 +17,17 @@ def index():
 @app.route("/add", methods=["POST"])
 def handle_add():
     tx_type = request.form.get("tx_type")
-    categ = request.form.get("categ_name")
+    itm = request.form.get("item_name")
     amount = float(request.form.get("amount_val"))
     today = datetime.now().strftime("%d-%m-%Y")
 
     if tx_type == "Expense":
+        categ = request.form.get("categ_name_expense")
         amount = -abs(amount)
+    else:
+        categ = request.form.get("categ_name_income")
     
-    db.create_transaction(tx_type, categ, amount, today)
+    db.create_transaction(tx_type, categ, itm, amount, today)
 
     return redirect(url_for("index"))
 
