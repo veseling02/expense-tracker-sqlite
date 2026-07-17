@@ -1,0 +1,78 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #13151a;
+    --text: #e8eaed;
+    --surface: #1c1f26;
+    --border: #2a2e37;
+    --muted: #9aa0a6;
+    --accent: #4f8cff;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+}
+
+main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 25px 16px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+}
+
+.card-label {
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.balance-value {
+    margin: 4px 0 0;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+form label {
+    display: block;
+    margin: 14px 0 4px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font: inherit;
+}
+
+button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 10px;
+    background: var(--accent);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
