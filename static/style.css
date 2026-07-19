@@ -9,6 +9,9 @@
     --border: #2a2e37;
     --muted: #9aa0a6;
     --accent: #4f8cff;
+    --green: #34c77b;
+    --red: #ff5c5c;
+    --reset: #821c19;
 }
 
 body {
@@ -75,4 +78,79 @@ button {
     font: inherit;
     font-weight: 600;
     cursor: pointer;
+}
+
+.toggle {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.toggle input {
+    display: none;
+}
+
+.toggle label {
+    flex: 1;
+    margin: 0;
+    padding: 8px;
+    text-align: center;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.toggle input:checked + label {
+    background: var(--accent);
+    color: #fff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 13px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+}
+
+td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+tbody tr:hover {
+    background: var(--surface)
+}
+
+.positive { color: var(--green); }
+.negative { color: var(--red); }
+
+td a {
+    color: var(--red);
+    text-decoration: none;
+}
+
+.reset {
+    margin-bottom: 24px;
+}
+
+.reset a {
+    display: inline-block;
+    padding: 8px 14px;
+    background: var(--surface);
+    border: 1px solid var(--reset);
+    border-radius: 8px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+}
+
+.reset a:hover {
+    background: var(--red);
+    color: #fff;
 }
