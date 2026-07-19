@@ -154,3 +154,32 @@ td a {
     background: var(--red);
     color: #fff;
 }
+
+.table-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.table-head h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.reset {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--surface);
+    border: 1px solid var(--reset);
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+}
+
+.reset:hover {
+    background: var(--red);
+    color: #fff;
+}
