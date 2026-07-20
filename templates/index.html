@@ -13,7 +13,7 @@
                 <div>
                     <div class="card">
                         <p class="card-label">Current Balance</p>
-                        <p class="balance-value">{{ balance }}€</p>
+                        <p class="balance-value">{{ "%.2f"|format(balance) }}€</p>
                     </div>
                     <form action="/add" method="POST" class="card">
                         <div class="toggle">
@@ -75,7 +75,7 @@
                             <tr>
                                 <td>{{ tx.category }}</td>
                                 <td>{{tx.item}}</td>
-                                <td class="{{ 'negative' if tx.amount < 0 else 'positive' }}">{{ tx.amount }}€</td>
+                                <td class="{{ 'negative' if tx.amount < 0 else 'positive' }}">{{ "%.2f"|format(tx.amount) }}€</td>
                                 <td>{{ tx.date }}</td>
                                 <td>
                                     <a href="{{url_for('handle_delete', transaction_id=tx.id) }}"
