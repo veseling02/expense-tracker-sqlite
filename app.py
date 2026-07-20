@@ -26,6 +26,8 @@ def handle_add():
         amount = -abs(amount)
     else:
         categ = request.form.get("categ_name_income")
+        if not itm:
+            itm = categ
     
     db.create_transaction(tx_type, categ, itm, amount, today)
 

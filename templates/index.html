@@ -9,95 +9,106 @@
     <body>
         <main>
             <h1>BudgetInt Dashboard</h1>
-            <div class="card">
-                <p class="card-label">Current Balance</p>
-                <p class="balance-value">{{ balance }}€</p>
+            <div class="layout">
+                <div>
+                    <div class="card">
+                        <p class="card-label">Current Balance</p>
+                        <p class="balance-value">{{ balance }}€</p>
+                    </div>
+                    <form action="/add" method="POST" class="card">
+                        <div class="toggle">
+                            <input type="radio" id="expense" name="tx_type" value="Expense" checked>
+                            <label for="expense">Expense</label>
+                            <input type="radio" id="income" name="tx_type" value="Income">
+                            <label for="income">Income</label>
+                        </div>
+
+                        <label>Category:</label>
+
+                        <div id="expense-categories" style="display: none;">
+                            <select name="categ_name_expense">
+                                <option value="Food">Food</option>
+                                <option value="Drinks">Drinks</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Bills">Bills</option>
+                            </select>
+                        </div>
+
+                        <div id="income-categories">
+                            <select name="categ_name_income">
+                                <option value="Salary">Salary</option>
+                                <option value="Gift">Gift</option>
+                                <option value="Bonus">Bonus</option>
+                            </select>
+                        </div>
+                        <div id="item-field">
+                            <label for="item_name">Item:</label>
+                            <input type="text" id="item_name" name="item_name" placeholder="e.g. Burger" required>
+                        </div>
+                        <label for="tx_amount">Amount:</label>
+                        <input type="number" id="tx_amount" name="amount_val" step="0.01" required>
+                        
+                        <button type="submit">Save Transaction</button>
+                    </form>
+                </div>
+
+                <div>
+                    <div class="table-head">
+                        <h2>Transactions</h2>
+                        <a class="reset" href="{{ url_for('handle_clear') }}"
+                            onclick="return confirm('EXTREME WARNING: This will delete your entire transaction history. Proceed?')">
+                            Reset All Data
+                        </a>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Item</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tx in trans_list %}
+                            <tr>
+                                <td>{{ tx.category }}</td>
+                                <td>{{tx.item}}</td>
+                                <td class="{{ 'negative' if tx.amount < 0 else 'positive' }}">{{ tx.amount }}€</td>
+                                <td>{{ tx.date }}</td>
+                                <td>
+                                    <a href="{{url_for('handle_delete', transaction_id=tx.id) }}"
+                                    onclick="return confirm('Delete this transaction?')">
+                                    Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <form action="/add" method="POST" class="card">
-                <div class="toggle">
-                    <input type="radio" id="expense" name="tx_type" value="Expense" checked>
-                    <label for="expense">Expense</label>
-                    <input type="radio" id="income" name="tx_type" value="Income">
-                    <label for="income">Income</label>
-                </div>
-
-                <label>Category:</label>
-
-                <div id="expense-categories" style="display: none;">
-                    <select name="categ_name_expense">
-                        <option value="Food">Food</option>
-                        <option value="Drinks">Drinks</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Bills">Bills</option>
-                    </select>
-                </div>
-
-                <div id="income-categories">
-                    <select name="categ_name_income">
-                        <option value="Salary">Salary</option>
-                        <option value="Gift">Gift</option>
-                        <option value="Bonus">Bonus</option>
-                    </select>
-                </div>
-
-                <label for="item_name">Item:</label>
-                <input type="text" id="item_name" name="item_name" placeholder="e.g. Burger" required>
-
-                <label for="tx_amount">Amount:</label>
-                <input type="number" id="tx_amount" name="amount_val" step="0.01" required>
-                
-                <button type="submit">Save Transaction</button>
-            </form>
-
-            <div class="table-head">
-                <h2>Transactions</h2>
-                <a class="reset" href="{{ url_for('handle_clear') }}"
-                    onclick="return confirm('EXTREME WARNING: This will delete your entire transaction history. Proceed?')">
-                    Reset All Data
-                </a>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Item</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for tx in trans_list %}
-                    <tr>
-                        <td>{{ tx.category }}</td>
-                        <td>{{tx.item}}</td>
-                        <td class="{{ 'negative' if tx.amount < 0 else 'positive' }}">{{ tx.amount }}€</td>
-                        <td>{{ tx.date }}</td>
-                        <td>
-                            <a href="{{url_for('handle_delete', transaction_id=tx.id) }}"
-                            onclick="return confirm('Delete this transaction?')">
-                            Delete
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
         </main>
         <script>
             const expenseRadio = document.getElementById('expense')
             const incomeRadio = document.getElementById('income')
             const expenseDiv = document.getElementById('expense-categories')
             const incomeDiv = document.getElementById('income-categories')
+            const itemField = document.getElementById('item-field')
+            const itemInput = document.getElementById('item_name')
 
             function toggle_categories() {
                 if (expenseRadio.checked) {
                     expenseDiv.style.display = "block";
                     incomeDiv.style.display = "none";
+                    itemField.style.display = "block";
+                    itemInput.required = true;
                 } else {
                     expenseDiv.style.display = "none";
                     incomeDiv.style.display = "block";
+                    itemField.style.display = "none";
+                    itemInput.required = false;
                 }
             }
 
