@@ -176,3 +176,9 @@ td a {
         grid-template-columns: 1fr;
     }
 }
+
+h1 {
+    margin: 0 0 20px;
+    font-size: 22px;
+    font-weight: 600;
+}
